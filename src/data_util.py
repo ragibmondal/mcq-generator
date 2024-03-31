@@ -1,4 +1,4 @@
-import pdfplumber
+import PyPDF2
 
 from src.logger import logging
 
@@ -9,14 +9,16 @@ def read_input_file(file_name):
         # Input file is a PDF
         try:
             # Reading the PDF file
-            with pdfplumber.open(file_name) as pdf:
+            with open(file_name.name, 'rb') as pdf_file:
+                pdf_reader = PyPDF2.PdfReader(pdf_file)
                 text = ""
                 # Extracting text from each page and adding to text
-                for page in pdf.pages:
+                for page_num in range(len(pdf_reader.pages)):
+                    page = pdf_reader.pages[page_num]
                     text += page.extract_text()
 
-            logging.info('Input PDF file was read')
-            return text
+                logging.info('Input PDF file was read')
+                return text
 
         except Exception as e:
             logging.error(f"Error while reading input PDF file: {e}")
