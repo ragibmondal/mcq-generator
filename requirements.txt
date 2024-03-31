@@ -3,7 +3,7 @@ langchain
 langchain-google-genai
 streamlit
 python-dotenv
-pdfplumber
+PyPDF2
 ipykernel
 
 -e .
