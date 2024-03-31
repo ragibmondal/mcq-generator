@@ -1,5 +1,4 @@
 import PyPDF2
-
 from src.logger import logging
 
 # Reading the input data file
@@ -9,26 +8,20 @@ def read_input_file(file_name):
         # Input file is a PDF
         try:
             # Reading the PDF file
-            with open(file_name.name, 'rb') as pdf_file:
-                pdf_reader = PyPDF2.PdfReader(pdf_file)
-                text = ""
-                # Extracting text from each page and adding to text
-                for page_num in range(len(pdf_reader.pages)):
-                    page = pdf_reader.pages[page_num]
-                    text += page.extract_text()
-
-                logging.info('Input PDF file was read')
-                return text
-
-        except Exception as e:
-            logging.error(f"Error while reading input PDF file: {e}")
+            pdf_reader = PyPDF2.PdfFileReader(file_name)
+            text = ""
+            # Extracting text from each page and adding to text
+            for page in pdf_reader.pages:
+                text += page.extract_text()
+            del pdf_reader
+            logging.info('Input PDF file was raed')
+            return text
+        except:
             raise Exception("Error while reading input PDF file.")
-
     elif file_name.name.endswith(".txt"):
         # Input file is a text
-        logging.info('Input Text file was read')
+        logging.info('Input Text file was raed')
         return file_name.read().decode('utf-8')
-
     else:
         # raise exception
         raise Exception("Unsupported file format. Only PDF and Text files are supported.")
