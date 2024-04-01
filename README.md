@@ -1,1 +1,1 @@
-mcq-generator
+This is a simple mcq-generator
